@@ -1,0 +1,24 @@
+{
+  "name": "***REMOVED***-big-chick",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "google-spreadsheet": "^2.0.8",
+    "googleapis": "^45.0.0",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Vincent Lin",
+  "license": "ISC"
+}

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>CSIE big chick</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<!-- Simple header with scrollable tabs. -->
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title">Home</span>
+			</div>
+			<!-- Tabs -->
+			<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+				<a href="#scroll-tab-cake" class="mdl-layout__tab is-active">Cake</a>
+				<a href="#scroll-tab-chicken" class="mdl-layout__tab">Chichen</a>
+				<a href="#scroll-tab-cocktail" class="mdl-layout__tab">Cocktail</a>
+			</div>
+		</header>
+		<div class="mdl-layout__drawer">
+			<span class="mdl-layout-title">Menu</span>
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link" href="/">Home</a>
+				<a class="mdl-navigation__link" href="/dashboard">Dashboard</a>
+			</nav>
+		</div>
+		<dialog class="mdl-dialog">
+			<h4 class="mdl-dialog__title">New order</h4>
+			<div class="mdl-dialog__content">
+				<p id="item-name"></p>
+				<form action="#" id="form-order" onsubmit="return false">
+					<div class="mdl-textfield mdl-js-textfield">
+						<input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="input1" name="amount" autocomplete="off">
+						<input type="hidden" id="input2" name="category">
+						<label class="mdl-textfield__label" for="input1">Number...</label>
+						<span class="mdl-textfield__error">Input is not a number!</span>
+					</div>
+				</form>
+			</div>
+			<div class="mdl-dialog__actions">
+				<button type="button" class="mdl-button submit">Order</button>
+				<button type="button" class="mdl-button close">Cancel</button>
+			</div>
+		</dialog>
+		<script type="text/javascript">
+			async function handleSubmit() {
+				dialog.close();
+				materialLoading(true);
+				let item = document.getElementById('item-name').innerHTML;
+				let amount = parseInt(document.forms['form-order'].amount.value);
+				let category = document.forms['form-order'].category.value;
+				console.log(`ordering ${item}, amount: ${amount}`);
+				let res = await fetch(`/api/${category}`, {
+					method: 'POST',
+					headers: {
+						'user-agent': 'Mozilla/4.0 MDN',
+						'content-type': 'application/json'
+					},
+					body: JSON.stringify({ item: item, amount, amount })
+				});
+				document.querySelector('#input1').value = '';
+				materialLoading(false);
+				if (res.redirected || res.status !== 200)
+					showReload();
+				else
+					showSuccess();
+			}
+			var dialog = document.querySelector('dialog');
+			dialog.querySelector('.close').addEventListener('click', () => {
+				dialog.close();
+			});
+			dialog.querySelector('.submit').addEventListener('click', handleSubmit);
+			document.getElementById('input1').addEventListener('keyup', (event) => {
+				if (event.key !== 'Enter')
+					return;
+				event.preventDefault();
+				handleSubmit();
+			})
+		</script>
+		<main class="mdl-layout__content">
+			<div class="mdl-layout__tab-panel is-active" id="scroll-tab-cake">
+				<% for (let i = 0; i < groceries.cake.length-1; ++i) { %>
+					<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+						<div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100"></div>
+						<div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+							<div class="mdl-card__title mdl-card--expand">
+								<h2 class="mdl-card__title-text"><%= groceries.cake[i][0] %></h2>
+							</div>
+							<div class="mdl-card__supporting-text">
+								$ <%= groceries.cake[i][1] %>
+							</div>
+							<div class="mdl-card__actions mdl-card--border">
+								<div class="mdl-layout-spacer"></div>
+								<button id="order-cake-<%= i %>" type="button" class="mdl-button mdl-button--colored mdl-js-ripple-effect mdl-js-button mdl-typography--text-right">Order</button>
+							</div>
+						</div>
+					</section>
+					<script>
+						var dialog = document.querySelector('dialog');
+						var showDialogButton = document.querySelector('#order-cake-<%= i %>');
+						if (!dialog.showModal) {
+							dialogPolyfill.registerDialog(dialog);
+						}
+						showDialogButton.addEventListener('click', () => {
+							document.getElementById('item-name').innerHTML = '<%= groceries.cake[i][0] %>';
+							document.querySelector('#input2').value = 'cake';
+							dialog.showModal();
+						});
+					</script>
+				<% } %>
+			</div>
+			<div class="mdl-layout__tab-panel" id="scroll-tab-chicken">
+				<% for (let i = 0; i < groceries.chicken.length-1; ++i) { %>
+					<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+						<div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100"></div>
+						<div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+							<div class="mdl-card__title mdl-card--expand">
+								<h2 class="mdl-card__title-text"><%= groceries.chicken[i][0] %></h2>
+							</div>
+							<div class="mdl-card__supporting-text">
+								$ <%= groceries.chicken[i][1] %>
+							</div>
+							<div class="mdl-card__actions mdl-card--border">
+								<div class="mdl-layout-spacer"></div>
+								<button id="order-chicken-<%= i %>" type="button" class="mdl-button mdl-button--colored mdl-js-ripple-effect mdl-js-button mdl-typography--text-right">Order</button>
+							</div>
+						</div>
+					</section>
+					<script>
+						var dialog = document.querySelector('dialog');
+						var showDialogButton = document.querySelector('#order-chicken-<%= i %>');
+						if (!dialog.showModal) {
+							dialogPolyfill.registerDialog(dialog);
+						}
+						showDialogButton.addEventListener('click', () => {
+							document.getElementById('item-name').innerHTML = '<%= groceries.chicken[i][0] %>';
+							document.querySelector('#input2').value = 'chicken';
+							dialog.showModal();
+						});
+					</script>
+				<% } %>
+			</div>
+			<div class="mdl-layout__tab-panel" id="scroll-tab-cocktail">
+				<% for (let i = 0; i < groceries.cocktail.length-1; ++i) { %>
+					<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+						<div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100"></div>
+						<div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+							<div class="mdl-card__title mdl-card--expand">
+								<h2 class="mdl-card__title-text"><%= groceries.cocktail[i][0] %></h2>
+							</div>
+							<div class="mdl-card__supporting-text">
+								$ <%= groceries.cocktail[i][1] %>
+							</div>
+							<div class="mdl-card__actions mdl-card--border">
+								<div class="mdl-layout-spacer"></div>
+								<button id="order-cocktail-<%= i %>" type="button" class="mdl-button mdl-button--colored mdl-js-ripple-effect mdl-js-button mdl-typography--text-right">Order</button>
+							</div>
+						</div>
+					</section>
+					<script>
+						var dialog = document.querySelector('dialog');
+						var showDialogButton = document.querySelector('#order-cocktail-<%= i %>');
+						if (!dialog.showModal) {
+							dialogPolyfill.registerDialog(dialog);
+						}
+						showDialogButton.addEventListener('click', () => {
+							document.getElementById('item-name').innerHTML = '<%= groceries.cocktail[i][0] %>';
+							document.querySelector('#input2').value = 'cocktail';
+							dialog.showModal();
+						});
+					</script>
+				<% } %>
+			</div>
+		</main>
+	</div>
+	<div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+		<div class="mdl-snackbar__text"></div>
+		<button class="mdl-snackbar__action" type="button"></button>
+	</div>
+	<script type="text/javascript">
+		ml_state = false;
+		ml_ready = false;
+		function materialLoading(state) {
+			if (state && ml_ready) document.getElementById('materialLoading').className = 'show';
+			else if (ml_ready) document.getElementById('materialLoading').className = 'hide';
+			ml_state = state;
+		}
+		window.addEventListener('load', function() {
+			var ml = document.createElement('div');
+			ml.id = 'materialLoading';
+			ml.className = 'hide';
+			var mlCentered = document.createElement('div');
+			mlCentered.id = 'materialLoadingCentered'
+			var mlContent = document.createElement('div');
+			mlContent.id = 'materialLoadingContent';
+			mlContent.innerHTML = '<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>';
+			mlCentered.appendChild(mlContent);
+			ml.appendChild(mlCentered);
+			document.body.appendChild(ml);
+			ml_ready = true;
+			materialLoading(ml_state);
+		})
+		const snackbarContainer = document.querySelector('#demo-toast-example');
+		function showSuccess() {
+			snackbarContainer.MaterialSnackbar.showSnackbar({message: 'Success', timeout: 1000});
+		}
+		function showReload() {
+			snackbarContainer.MaterialSnackbar.showSnackbar({message: 'Please re-login and try again', timeout: 5000, actionHandler: () => {materialLoading(true); location.reload();}, actionText: 'Reload'});
+		}
+	</script>
+</body>
+
+</html>

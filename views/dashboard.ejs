@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>CSIE big chick</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<!-- Simple header with scrollable tabs. -->
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title">Dashboard</span>
+			</div>
+		</header>
+		<div class="mdl-layout__drawer">
+			<span class="mdl-layout-title">Menu</span>
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link" href="/">Home</a>
+				<a class="mdl-navigation__link" href="/dashboard">Dashboard</a>
+			</nav>
+		</div>
+		<main class="mdl-layout__content">
+			<section class="section--center mdl-grid mdl-grid--no-spacing ">
+				<div class="mdl-cell mdl-cell--12-col" style="padding-bottom: 12px">
+					<div class="mdl-card__title" style="padding-left: 5px">
+						<h2 class="mdl-card__title-text">
+							蛋糕部
+						</h2>
+					</div>
+					<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
+						<thead>
+							<tr>
+								<th class="mdl-data-table__cell--non-numeric">商品</th>
+								<th>賣出總數</th>
+								<th>賣出總價</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% for (item of groceries.cake) { %>
+								<tr>
+									<td class="mdl-data-table__cell--non-numeric"><%= item[0] %></td>
+									<td><%= item[2] %></td>
+									<td><%= item[3] %></td>
+								</tr>
+							<% } %>
+						</tbody>
+					</table>
+				</div>
+				<div class="mdl-cell mdl-cell--12-col" style="padding-bottom: 12px">
+					<div class="mdl-card__title" style="padding-left: 5px">
+						<h2 class="mdl-card__title-text">
+							雞肉串部
+						</h2>
+					</div>
+					<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
+						<thead>
+							<tr>
+								<th class="mdl-data-table__cell--non-numeric">商品</th>
+								<th>賣出總數</th>
+								<th>賣出總價</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% for (item of groceries.chicken) { %>
+								<tr>
+									<td class="mdl-data-table__cell--non-numeric"><%= item[0] %></td>
+									<td><%= item[2] %></td>
+									<td><%= item[3] %></td>
+								</tr>
+							<% } %>
+						</tbody>
+					</table>
+				</div>
+				<div class="mdl-cell mdl-cell--12-col" style="padding-bottom: 12px">
+					<div class="mdl-card__title" style="padding-left: 5px">
+						<h2 class="mdl-card__title-text">
+							調酒部
+						</h2>
+					</div>
+					<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="width: 100%">
+						<thead>
+							<tr>
+								<th class="mdl-data-table__cell--non-numeric">商品</th>
+								<th>賣出總數</th>
+								<th>賣出總價</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% for (item of groceries.cocktail) { %>
+								<tr>
+									<td class="mdl-data-table__cell--non-numeric"><%= item[0] %></td>
+									<td><%= item[2] %></td>
+									<td><%= item[3] %></td>
+								</tr>
+							<% } %>
+						</tbody>
+					</table>
+				</div>
+			</section>
+		</main>
+	</div>
+</body>
+
+</html>
