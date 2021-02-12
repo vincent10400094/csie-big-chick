@@ -1,6 +1,6 @@
 const express = require('express');
 const createError = require('http-errors');
-const {google} = require('googleapis');
+const { google } = require('googleapis');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
@@ -43,8 +43,8 @@ router.get('/dashboard', async (req, res, next) => {
 });
 
 passport.use(new LocalStrategy((username, password, done) => {
-	if (username === '***REMOVED***' && password === '***REMOVED***2019jizz');
-		return done(null, user);
+	if (username === '<your username>' && password === '<your password>');
+	return done(null, user);
 	done(null, false, {});
 }));
 
